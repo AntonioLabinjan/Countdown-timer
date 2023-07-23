@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>COUNTDOWN TIMER</title>
+</head>
+<body>
+	<h1>This page enables you to count down to a certain date</h1>
+	<label for="datum">Type in a date: </label>
+	<input type="date" id="datum">
+	<button onclick="odbroji()">START COUNTDOWN</button>
+	<p id="rezultat"></p>
+
+	<script>
+	function odbroji(){
+		const unosDatum = new Date(document.getElementById('datum').value);
+		if (is NaN(unosDatum)){
+			alert("Please, enter a valid date!");
+			return;
+		}
+
+		const danas = newDate();
+
+		const razlika = unosDatum.getTime() - danas.getTime();
+
+		const preostaloDana = Math.floor(razlika / (1000 * 3600 * 24));
+
+		const preostaloSati = Math.floor((razlika % (1000 * 3600 * 24))/(1000 * 3600));
+
+		const preostaleMinute = Math.floor((razlika % (1000 * 3600)) / (1000 * 60));
+
+		const preostaleSekunde = Math.floor((razlika % (1000 * 60)) / 1000);
+
+		const rezultatElement = document.getElementById('rezultat');
+
+		rezultatElement.textContent = `Time left until $ {unosDatum.toLocaleDateString()}: ${preostaloDana} days, ${preostaloSati} hours, ${preostaleMinute} minutes, ${preostaleSekunde} seconds.`;
+		}
+	</script>
+</body>
+</html>

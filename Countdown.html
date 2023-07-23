@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>COUNTDOWN TIMER</title>
+	<style>body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  color: #333;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="date"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+p#rezultat {
+  font-size: 18px;
+  margin-top: 20px;
+  color: #333;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+p#rezultat.show-animation {
+  animation: fadeInOut 2s ease-in-out;
+}
+</style>
+</head>
+<body>
+	<h1>This page enables you to count down to a certain date</h1>
+	<center><label for="datum">Type in a date: </label></center>
+	<input type="date" id="datum">
+	<button onclick="startCountdown()">START COUNTDOWN</button>
+	<p id="rezultat"></p>
+
+	<script>
+		let countdownInterval;
+
+		function startCountdown() {
+			const unosDatum = new Date(document.getElementById('datum').value);
+			if (isNaN(unosDatum)) {
+				alert("Please, enter a valid date!");
+				return;
+			}
+
+			const rezultatElement = document.getElementById('rezultat');
+
+			countdownInterval = setInterval(function () {
+				const danas = new Date();
+				const razlika = unosDatum.getTime() - danas.getTime();
+
+				if (razlika <= 0) {
+					clearInterval(countdownInterval);
+					rezultatElement.textContent = "Countdown expired!";
+				} else {
+					const preostaloDana = Math.floor(razlika / (1000 * 3600 * 24));
+					const preostaloSati = Math.floor((razlika % (1000 * 3600 * 24)) / (1000 * 3600));
+					const preostaleMinute = Math.floor((razlika % (1000 * 3600)) / (1000 * 60));
+					const preostaleSekunde = Math.floor((razlika % (1000 * 60)) / 1000);
+
+					rezultatElement.textContent = `Time left until ${unosDatum.toLocaleDateString()}: ${preostaloDana} days, ${preostaloSati} hours, ${preostaleMinute} minutes, ${preostaleSekunde} seconds.`;
+				}
+			}, 1000); 
+		}
+	</script>
+</body>
+</html>
